@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+    <title>重师小助手v1.0 测试版</title>
+<style>
+html,body{
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+        }
+
+#cas{
+        position:fixed;
+        top:0;
+        left:0;
+        z-index: -1000;
+        opacity: 1;
+    }
+#dialog { 
+     background-color:rgba(200,200,200, 0.1); 
+     border:1px solid rgba(255,0,0, 0.4); 
+     height:500px; 
+     left:50%; 
+     margin:-250px 0 0 -200px; 
+     padding:1px; 
+     position:fixed !important; /* 浮动登录框 */ 
+     position:absolute; 
+     top:50%; 
+     width:400px; 
+     z-index:1; 
+     border-radius:5px; 
+     display:block; 
+     text-align: center;
+     overflow: hidden;
+}
+#ccid{
+    transition: .5s all ease-in-out;
+    width:800px;
+}
+.flagxc{
+    margin-left:-400px;
+    width:800px;
+}
+@media screen and (MAX-width:400px)
+{
+    #dialog { 
+     background-color:rgba(200,200,200, 0.1); 
+     border:1px solid rgba(255,0,0, 0.4); 
+     height:90%; 
+     top:5%;
+     left:5%; 
+     margin:0; 
+     padding:0px; 
+     position:absolute; 
+     width:90%; 
+     z-index:1; 
+     border-radius:5px; 
+     display:block; 
+     text-align: center;
+     overflow: hidden;
+    } 
+    #ccid{
+    transition: .5s all ease-in-out;
+    width:200%;
+    }
+    .flagxc{
+    margin-left:-100%;
+    width:200%;
+    }
+}
+}
+</style>
+<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="css/simple-sidebar.css" rel="stylesheet">
+</head>
+<body>
+        
+        <canvas id="cas"></canvas>
+        <div id="dialog">
+                <div style="color:#666;font-family:微软雅黑;margin-bottom:5px;border-radius:5px;border-bottom:1px solid black; ">
+                    <h1>重师小助手<em style="font-size:15px">Beta</em></h1>
+                </div>
+                <ul id="myTab" class="nav" style="font-size:16px;">
+                    <a href="#" class="regnlog">>>>注册</a>
+                </ul>
+                <div style="clear:both;"></div>
+                <div id="ccid">
+                    <div style="display:block;float:left;padding:10px;width:50%;">
+                        <form id="form1" action="" method="post" style="margin:0 auto;">
+                            <div style="padding:5%;">
+                                <div class="input-group" style="width:100%">
+                                    <input id="inusn" type="text" class="form-control" placeholder="用户名(cc)">
+                                </div>
+                                <div class="input-group" style="width:100%">
+                                    <input id="inpwd" type="password" class="form-control" placeholder="密码(1)">
+                                </div>
+                            
+                                <div style="height:20px;"></div>   
+                                <input type="button" class="btn btn-primary" style="width:100%;cursor:pointer;" onclick="dl();" value="登陆">
+                            </div><div>小贴士：本站由重庆师范大学计科贺旭超制作</div>
+                        </form>
+                    </div>
+                    <div style="display:block;padding:10px;width:50%;float:left;">
+                        <form id="form2" action="" >
+                            <div style="padding:5%;">
+                                <div class="input-group">
+                                    <span class="input-group-addon" style="background-color:#ccc;"  >
+                                        用户名
+                                    </span>
+                                    <input id="upusn" type="text" class="form-control" placeholder="推荐使用字母数字的组合">
+                                </div><br>
+                                <div class="input-group">
+                                    <span class="input-group-addon" style="background-color:#ccc;"  >
+                                        密<b style="opacity:0;">—</b>码
+                                    </span>
+                                    <input id="uppwd" type="password" class="form-control" placeholder="6位以上">
+                                </div><br>
+                                <div class="input-group">
+                                    <span class="input-group-addon" style="background-color:#ccc;"  >
+                                        邮<b style="opacity:0;">—</b>箱
+                                    </span>
+                                    <input id="email" type="text" class="form-control" placeholder="email">
+                                </div><br>
+                                <input type="button" class="btn btn-danger" style="width:100%;cursor:pointer;" onclick="zc();" value="注册">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <div style="margin-top:30px;"><img src="img/cqnux.png" style="width:80px;height:80px;" alt=""><br>cc1997 &copy; CQNU</div>
+        </div> 
+        <div id="bottom-info"></div>
+
+<script src="js/HomeBg.js"></script>
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script>
+    function showInfo(flag){
+        $("#bottom-info").toggleClass("toggled");
+        if(flag)
+		{
+            $("#bottom-info").css({
+                  display:"block",
+                background:"green"
+            })
+			flag=true;
+		}
+		else if(!flag)
+		{
+            $("#bottom-info").css({
+                  display:"block",
+                background:"red"
+            })
+			flag=false;
+		}
+    }
+    function dl()
+    {
+    //第一步：取数据,这里用到了用户名和密码
+    var uid=$("#inusn").val();
+    var pwd=$("#inpwd").val();
+    //第二步：验证数据，这里需要从数据库调数据，我们就用到了ajax
+    $.ajax({
+    url:"checkin.php",//请求地址
+    data:{uid:uid,pwd:pwd},//提交的数据
+    type:"POST",//提交的方式
+    dataType:"TEXT", //返回类型 TEXT字符串 JSON XML
+        success:function(data){
+        //开始之前要去空格，用trim()
+            if(data.trim()=="OK"){
+			    $("#bottom-info").text("登陆成功~正在跳转~");
+                showInfo(true);
+                setTimeout(function() {
+                    window.location.href = "index.php";    
+                }, 1000);
+                
+            }else if(data.trim()=="NO"){
+                $("#bottom-info").text("登陆失败");
+                showInfo(false);
+                setTimeout(function() {
+                    showInfo(false);   
+                }, 1000);
+            }else{
+                alert("Unknow!")
+            }
+        }
+    })
+    }
+    function zc()
+    {
+    //第一步：取数据,这里用到了用户名和密码
+    var uid=$("#upusn").val();
+    var pwd=$("#uppwd").val();
+    var email=$("#email").val();
+    //第二步：验证数据，这里需要从数据库调数据，我们就用到了ajax
+    $.ajax({
+    url:"checkup.php",//请求地址
+    data:{uid:uid,pwd:pwd,email:email},//提交的数据
+    type:"POST",//提交的方式
+    dataType:"TEXT", //返回类型 TEXT字符串 JSON XML
+        success:function(data){
+
+        //开始之前要去空格，用trim()
+            if(data.trim()=="OK"){
+                $("#bottom-info").text("注册成功~正在跳转...");
+                showInfo(true);
+                setTimeout(function() {
+                    window.location.href = "index.php";    
+                }, 1000);
+                
+            }else if(data.trim()=="NO"){
+                $("#bottom-info").text("注册失败:(");
+                showInfo(false);
+                setTimeout(function() {
+                    showInfo(false);   
+                }, 1000);
+            }else{
+                alert("Unknow!")
+            }
+        }        
+    })
+    }
+    var flag=false;
+    $(".regnlog").click(function(e) {
+        $("#ccid").toggleClass("flagxc");
+        if(!flag){
+            $(".regnlog").text('<<<');
+            flag=true;
+        }else{
+            $(".regnlog").text('>>>');
+            flag=false;
+        }
+    });
+</script>
+</body>
+</html>
