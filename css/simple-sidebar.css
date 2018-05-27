@@ -1,0 +1,193 @@
+
+
+body {
+  overflow-x: none;
+}
+a{text-decoration:none;}
+a:hover{text-decoration:none;}
+#wrapper {
+  padding-left: 0;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+#wrapper.toggled {
+  padding-left: 250px;
+}
+
+#sidebar-wrapper {
+  z-index: 1000;
+  position: fixed;
+  left: 250px;
+  width: 0;
+  height: 100%;
+  margin-left: -250px;
+  overflow-y: auto;
+  background: #fff;
+  border-right:1px solid #000;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+  width: 250px;
+}
+
+#page-content-wrapper {
+  width: 100%;
+  position: absolute;
+  padding: 15px 100px;
+}
+
+#wrapper.toggled #page-content-wrapper {
+  position: absolute;
+  margin-right: -250px;
+}
+
+
+/* Sidebar Styles */
+
+.sidebar-nav {
+  position: absolute;
+  top: 0;
+  width: 250px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sidebar-nav li {
+  text-indent: 20px;
+  line-height: 40px;
+}
+
+.sidebar-nav li a {
+  display: block;
+  text-decoration: none;
+  border-left:0px solid red;
+  color: #000;
+  transition: all .5s ease-out;
+}
+
+.sidebar-nav li a:hover {
+  padding-left: 5px;
+  text-decoration: none;
+  border-left:5px solid red;
+  color: #000;
+  background: rgba(0, 0, 0, 0.2);
+}
+.activebar{
+  border-left:5px solid red;
+  background: rgba(0, 0, 0, 0.2);
+}
+.sidebar-nav li a:active, .sidebar-nav li a:focus {
+  text-decoration: none;
+}
+
+.sidebar-nav>.sidebar-brand {
+  height: 65px;
+  font-size: 18px;
+  line-height: 60px;
+}
+
+.sidebar-nav>.sidebar-brand a {
+  color: #999999;
+}
+
+.sidebar-nav>.sidebar-brand a:hover {
+  color: #fff;
+  background: none;
+}
+#myTab{text-align: left;float: left;width: 100%;text-align: center;padding: 0 40%;}
+#myTab li{
+display: block;
+}
+#myTab li a{
+  font-size: 26px;
+  font-weight: 500;
+  color: #000;
+  display: block;
+  transition: all .2s ease-in-out;
+}
+#myTab li a:hover{
+  font-size: 26px;
+  font-weight: 500;
+  color: #f99;
+  background-color:transparent;
+  border:1px solid transparent;
+  display: block;
+}
+#myTab li a:link{
+  background-color:transparent;
+  border:1px solid transparent;
+  display: block;
+}
+#myTabContent{
+  clear: both;
+  display: block;
+  height: 100%;
+  padding: 20px 0;
+  z-index: inherit;
+}
+#bottom-info{
+  display:none;
+  width:100%;
+  height:80px;
+  background-color:green;
+  position:absolute;
+  bottom:-80px;
+  z-index:10;
+  text-align:center;
+  line-height: 80px;
+  color:white;
+  font-size: 30px;
+  font-weight: bold;
+  transition: all .5s ease-in-out;
+}
+#bottom-info.toggled{
+  bottom:0px;
+}
+@media(min-width:1200px) {
+  #wrapper {
+    padding-left: 0;
+  }
+  #wrapper.toggled {
+    padding-left: 250px;
+  }
+  #sidebar-wrapper {
+    width: 0;
+  }
+  #wrapper.toggled #sidebar-wrapper {
+    width: 250px;
+  }
+  #page-content-wrapper {
+    padding: 20px 100px;
+    position: relative;
+  }
+  #wrapper.toggled #page-content-wrapper {
+    position: relative;
+    margin-right: 0;
+  }
+}
+@media(max-width:1200px){
+    #myTab{
+      padding:0;
+    }
+    #myTab li a{
+    font-size:16px;
+    }
+    #page-content-wrapper {
+      width: 100%;
+      position: absolute;
+      padding: 15px;
+    }
+    
+    #wrapper.toggled #page-content-wrapper {
+      position: absolute;
+      margin-right: -250px;
+    }
+}
